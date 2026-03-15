@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "스윔잇 전국 특강 신청",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         }}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
