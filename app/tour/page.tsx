@@ -111,6 +111,13 @@ export default function TourPage() {
   const isSubmitDisabled =
     submitState === "loading" || !name.trim() || !contact.trim() || !regionValue;
 
+  const messageColor =
+    submitState === "success"
+      ? "#166534"
+      : submitState === "error"
+        ? "#b91c1c"
+        : "#334155";
+
   return (
     <main
       style={{
@@ -148,6 +155,19 @@ export default function TourPage() {
             전국 지역 수요 조사
           </span>
 
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              flexWrap: "wrap",
+              marginTop: 14,
+            }}
+          >
+            <SummaryChip label="30명 이상 모이면 개설" />
+            <SummaryChip label="결제 없는 신청 폼" />
+            <SummaryChip label="모바일 1분 신청" />
+          </div>
+
           <h1
             style={{
               marginTop: 18,
@@ -171,6 +191,37 @@ export default function TourPage() {
           >
             {"서울 서초 특강에 이어\n전국에서도 스윔잇 특강 요청을 받고 있습니다.\n\n신청자가 30명 이상 모이면\n해당 지역에서 특강을 개최합니다.\n\n먼저 신청하신 분들께\n특강 일정과 예약을 가장 먼저 안내드립니다.\n\n신청은 결제가 아니며\n특강 일정 확정 시 먼저 안내드립니다."}
           </p>
+
+          <div
+            style={{
+              marginTop: 20,
+              borderRadius: 20,
+              padding: "16px 18px",
+              backgroundColor: "#eff6ff",
+              border: "1px solid #bfdbfe",
+            }}
+          >
+            <p
+              style={{
+                margin: 0,
+                color: "#1e40af",
+                fontSize: 15,
+                fontWeight: 700,
+              }}
+            >
+              지금 선택된 지역
+            </p>
+            <p
+              style={{
+                margin: "6px 0 0",
+                color: "#0f172a",
+                fontSize: 20,
+                fontWeight: 800,
+              }}
+            >
+              {regionValue || "지역을 선택해주세요"}
+            </p>
+          </div>
 
           <div style={{ marginTop: 28 }}>
             <h2
@@ -254,6 +305,9 @@ export default function TourPage() {
                   ) : (
                     <input value={regionValue} readOnly style={inputStyle} />
                   )}
+                  <span style={helperTextStyle}>
+                    선택한 지역으로 특강 일정 안내를 보내드립니다.
+                  </span>
                 </label>
 
                 <label style={{ display: "grid", gap: 8 }}>
@@ -274,6 +328,9 @@ export default function TourPage() {
                     placeholder="연락 가능한 번호를 입력해주세요"
                     style={inputStyle}
                   />
+                  <span style={helperTextStyle}>
+                    예: 010-1234-5678. 일정 안내 외의 용도로 사용하지 않습니다.
+                  </span>
                 </label>
               </div>
 
@@ -307,18 +364,52 @@ export default function TourPage() {
                 style={{
                   marginTop: 14,
                   marginBottom: 0,
-                  color: submitState === "success" ? "#166534" : "#334155",
+                  color: messageColor,
                   fontSize: 14,
                   lineHeight: 1.6,
+                  fontWeight: submitState === "success" ? 700 : 500,
                 }}
               >
                 {message}
               </p>
             ) : null}
+
+            <p
+              style={{
+                marginTop: 12,
+                marginBottom: 0,
+                color: "#64748b",
+                fontSize: 13,
+                lineHeight: 1.6,
+              }}
+            >
+              신청은 결제가 아닙니다. 지역 수요 확인 후 특강 일정이 확정되면 먼저
+              연락드립니다.
+            </p>
           </div>
         </div>
       </section>
     </main>
+  );
+}
+
+function SummaryChip({ label }: { label: string }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        padding: "8px 12px",
+        borderRadius: 999,
+        backgroundColor: "#f8fbff",
+        border: "1px solid #dbeafe",
+        color: "#1e3a8a",
+        fontSize: 13,
+        fontWeight: 700,
+      }}
+    >
+      {label}
+    </span>
   );
 }
 
@@ -331,4 +422,10 @@ const inputStyle = {
   padding: "14px 16px",
   fontSize: 15,
   outline: "none",
+};
+
+const helperTextStyle = {
+  color: "#64748b",
+  fontSize: 12,
+  lineHeight: 1.5,
 };
