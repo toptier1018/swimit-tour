@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
+    "googleapis": "^171.4.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest"

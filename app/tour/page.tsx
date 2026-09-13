@@ -52,6 +52,7 @@ export default function TourPage() {
   const [customRegion, setCustomRegion] = useState("");
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
+  const [email, setEmail] = useState("");
   const [selectedStroke, setSelectedStroke] =
     useState<(typeof STROKE_OPTIONS)[number]>("자유형");
   const [isCompleteModalOpen, setIsCompleteModalOpen] = useState(false);
@@ -84,6 +85,7 @@ export default function TourPage() {
     if (formState.status === "success") {
       setName("");
       setContact("");
+      setEmail("");
       setSelectedStroke("자유형");
       setIsCompleteModalOpen(true);
       if (selectedRegion === "기타") {
@@ -339,13 +341,16 @@ export default function TourPage() {
                       region: regionValue,
                       hasName: Boolean(name.trim()),
                       hasContact: Boolean(contact.trim()),
+                      hasEmail: Boolean(email.trim()),
                       stroke: selectedStroke,
                     });
                   }}
                 >
                   <div style={{ display: "grid", gap: 14 }}>
                     <label style={{ display: "grid", gap: 8 }}>
-                      <span style={{ fontSize: 14, fontWeight: 700 }}>지역</span>
+                      <span style={{ fontSize: 14, fontWeight: 700 }}>
+                        지역 <RequiredMark />
+                      </span>
                       {selectedRegion === "기타" ? (
                         <input
                           name="region"
@@ -364,13 +369,12 @@ export default function TourPage() {
                           style={inputStyle}
                         />
                       )}
-                      <span style={helperTextStyle}>
-                        선택한 지역으로 특강 일정 안내를 보내드립니다.
-                      </span>
                     </label>
 
                     <label style={{ display: "grid", gap: 8 }}>
-                      <span style={{ fontSize: 14, fontWeight: 700 }}>이름</span>
+                      <span style={{ fontSize: 14, fontWeight: 700 }}>
+                        이름 <RequiredMark />
+                      </span>
                       <input
                         name="name"
                         value={name}
@@ -381,7 +385,9 @@ export default function TourPage() {
                     </label>
 
                     <label style={{ display: "grid", gap: 8 }}>
-                      <span style={{ fontSize: 14, fontWeight: 700 }}>연락처</span>
+                      <span style={{ fontSize: 14, fontWeight: 700 }}>
+                        연락처 <RequiredMark />
+                      </span>
                       <input
                         name="contact"
                         type="tel"
@@ -390,8 +396,63 @@ export default function TourPage() {
                         placeholder="연락 가능한 번호를 입력해주세요"
                         style={inputStyle}
                       />
-                      <span style={helperTextStyle}>
-                        입력하신 연락처로 특강 일정 안내를 보내드립니다.
+                    </label>
+
+                    <label style={{ display: "grid", gap: 8 }}>
+                      <span style={{ fontSize: 14, fontWeight: 700 }}>이메일</span>
+                      <input
+                        name="email"
+                        type="email"
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        placeholder="예시: swimit@example.com"
+                        style={inputStyle}
+                      />
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: 8,
+                          padding: "12px 14px",
+                          borderRadius: 16,
+                          backgroundColor: "#eff6ff",
+                          border: "1px solid #bfdbfe",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: "#2563eb",
+                            fontSize: 15,
+                            fontWeight: 900,
+                            lineHeight: 1.5,
+                            flexShrink: 0,
+                          }}
+                        >
+                          ※
+                        </span>
+                        <span style={{ display: "grid", gap: 2 }}>
+                          <span
+                            style={{
+                              color: "#1d4ed8",
+                              fontSize: 14,
+                              fontWeight: 800,
+                              wordBreak: "keep-all",
+                            }}
+                          >
+                            특강 할인 + 수영 제품 할인 혜택
+                          </span>
+                          <span
+                            style={{
+                              color: "#0f172a",
+                              fontSize: 14,
+                              fontWeight: 700,
+                              wordBreak: "keep-all",
+                            }}
+                          >
+                            가장 먼저 받아보세요
+                          </span>
+                        </span>
                       </span>
                     </label>
 
@@ -508,12 +569,19 @@ export default function TourPage() {
               </div>
 
               <div style={warningCardStyle}>
-                <p style={{ ...sectionTitleStyle, color: "#b45309" }}>
-                  참고해주세요
+                <p
+                  style={{
+                    ...sectionTitleStyle,
+                    color: "#b45309",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
+                >
+                  <span aria-hidden="true">⚠️</span>
+                  <span>참고해주세요</span>
                 </p>
                 <p style={{ ...bodyCopyStyle, marginTop: 10 }}>
-                  이 신청은 결제가 아닙니다.
-                  <br />
                   30명 이상 모이게 되어
                   <br />
                   해당 지역 특강 일정이 확정되면
@@ -680,6 +748,19 @@ function PlainLine({ text }: { text: string }) {
       <span style={{ color: "#2563eb", fontWeight: 900 }}>•</span>
       <span>{text}</span>
     </div>
+  );
+}
+
+function RequiredMark() {
+  return (
+    <span
+      style={{
+        color: "#dc2626",
+        fontWeight: 800,
+      }}
+    >
+      *
+    </span>
   );
 }
 
