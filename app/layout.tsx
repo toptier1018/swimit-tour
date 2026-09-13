@@ -3,8 +3,9 @@ import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  title: "스윔잇 전국 특강 신청",
-  description: "전국 지역 특강 수요를 빠르게 수집하는 스윔잇 특강 신청 페이지",
+  title: "스윔잇 전국투어 | 우리 지역 특강 요청",
+  description:
+    "다음 스윔잇은 어디로 갈까요? 전국 지역 수요를 모아 특강 개설을 준비합니다.",
   icons: {
     icon: "/icon.svg",
   },
